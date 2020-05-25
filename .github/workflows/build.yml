@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        java: [ 11 ]
+        java: [ 8, 11 ]
         scala: [ 2.12.11, 2.13.1 ]
         command: [ci-jvm-all]
     
