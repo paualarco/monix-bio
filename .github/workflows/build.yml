@@ -10,8 +10,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        java: [8, 11]
-        scala: [2.11.12, 2.12.11, 2.13.1]
+        java: [ 11 ]
+        scala: [ 2.12.11, 2.13.1 ]
         command: [ci-jvm-all]
     
     steps:
@@ -19,39 +19,28 @@ jobs:
       - uses: olafurpg/setup-scala@v7
         with:
           java-version: "adopt@1.${{ matrix.java }}"
-          
-      - name: Cache SBT Coursier directory
-        uses: actions/cache@v1
+        
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
         with:
-          path: ~/.cache/coursier/v1
-          key: ${{ runner.os }}-coursier-${{ hashFiles('**/*.sbt') }}
-          restore-keys: |
-            ${{ runner.os }}-coursier-
-      - name: Cache SBT directory
-        uses: actions/cache@v1
-        with:
-          path: ~/.sbt
-          key: |
-            ${{ runner.os }}-sbt-${{ hashFiles('project/build.properties') }}-${{ hashFiles('project/plugins.sbt') }}
-          restore-keys: ${{ runner.os }}-sbt-
-          
-      - name: Run Tests for Java ${{ matrix.java }}, Scala ${{ matrix.scala }}, ScalaJS ${{ matrix.scalajs }}
+         ruby-version: 2.6
+           
+      - name: Run Tests for Java ${{ matrix.java }}, Scala ${{ matrix.scala }}
         run: |
           ./.github/scripts/build
         env:
           SCALA_VERSION: ${{ matrix.scala }}
-          SCALAJS_VERSION: ${{ matrix.scalaJS }}
           SBT_COMMAND: ${{ matrix.command }}
               
   js-tests:
-    name: scalajs-${{ matrix.scalajs }} scala-${{ matrix.scala }} jdk-${{ matrix.java }}   tests
+    name: scalajs-${{ matrix.scalajs }} scala-${{ matrix.scala }} jdk-${{ matrix.java }} tests
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: true
       matrix:
-        java: [8]
-        scala: [2.11.12, 2.12.11, 2.13.1]
+        java: [8, 11]
+        scala: [ 2.12.11, 2.13.1]
         scalajs: [0.6.32, 1.0.0]
         command: [ci-js]
     
@@ -60,22 +49,12 @@ jobs:
       - uses: olafurpg/setup-scala@v7
         with:
           java-version: "adopt@1.${{ matrix.java }}"
-          
-      - name: Cache SBT Coursier directory
-        uses: actions/cache@v1
+ 
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
         with:
-          path: ~/.cache/coursier/v1
-          key: ${{ runner.os }}-coursier-${{ hashFiles('**/*.sbt') }}
-          restore-keys: |
-            ${{ runner.os }}-coursier-
-      - name: Cache SBT directory
-        uses: actions/cache@v1
-        with:
-          path: ~/.sbt
-          key: |
-            ${{ runner.os }}-sbt-${{ hashFiles('project/build.properties') }}-${{ hashFiles('project/plugins.sbt') }}
-          restore-keys: ${{ runner.os }}-sbt-
-          
+         ruby-version: 2.6
+         
       - name: Run Tests for Java ${{ matrix.java }}, Scala ${{ matrix.scala }}, ScalaJS ${{ matrix.scalajs }}
         run: |
           ./.github/scripts/build
@@ -99,7 +78,12 @@ jobs:
       - uses: olafurpg/setup-scala@v7
         with:
           java-version: "adopt@1.${{ matrix.java }}"
-
+      
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
+        with:
+         ruby-version: 2.6
+     
       - name: Cache SBT Coursier directory
         uses: actions/cache@v1
         with:
