@@ -33,5 +33,5 @@ fi
 
 if [[ "$SCALA_VERSION" =~ ^2\.13\. ]]; then
 echo "MAKE MICROSITE..."
-#   sbt ++$SCALA_VERSION microsite/makeMicrosite
+  sbt ++$SCALA_VERSION microsite/makeMicrosite
 fi
