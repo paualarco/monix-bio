@@ -108,7 +108,7 @@ jobs:
           SBT_COMMAND: ${{ matrix.command }}
 
   publish:
-    needs: [ jvm-tests, js-tests, mima ]
+    needs: [ js-tests, mima ]
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
@@ -123,5 +123,12 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
 
+  publish-microsite:
+    needs: [ publish ]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: olafurpg/setup-scala@v2
       - name: Publish microsite ${{ github.ref }}
         run: sbt microsite/publishMicrosite
