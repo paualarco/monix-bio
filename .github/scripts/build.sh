@@ -23,11 +23,4 @@ if [[ -z "$SBT_COMMAND" ]]; then
     exit 1
 fi
 
-gem install jekyll -v 4
-
 sbt -J-Xmx6144m ++$SCALA_VERSION $SBT_COMMAND
-
-if [[ "$SCALA_VERSION" =~ ^2\.13\. ]]; then
-    echo "Making microsite..."
-    sbt ++$SCALA_VERSION microsite/makeMicrosite
-fi
