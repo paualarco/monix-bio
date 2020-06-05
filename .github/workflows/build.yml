@@ -21,7 +21,7 @@ jobs:
           java-version: "adopt@1.${{ matrix.java }}"     
       - name: Run Tests for Java ${{ matrix.java }}, Scala ${{ matrix.scala }}
         run: |
-          ./.github/scripts/build
+          ./.github/scripts/build.sh
         env:
           SCALA_VERSION: ${{ matrix.scala }}
           SBT_COMMAND: ${{ matrix.command }}
@@ -45,7 +45,7 @@ jobs:
           java-version: "adopt@1.${{ matrix.java }}"
       - name: Run Tests for Java ${{ matrix.java }}, Scala ${{ matrix.scala }}, ScalaJS ${{ matrix.scalajs }}
         run: |
-          ./.github/scripts/build
+          ./.github/scripts/build.sh
         env:
           SCALA_VERSION: ${{ matrix.scala }}
           SCALAJS_VERSION: ${{ matrix.scalaJS }}
